@@ -9,5 +9,5 @@ class Driver(models.Model):
     age = models.IntegerField(null=True, blank=True)
     team = ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True)
 
-def __str__(self):
-    return self.name
+    def __str__(self):
+        return self.name
