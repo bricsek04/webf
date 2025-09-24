@@ -1,11 +1,50 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Kezdőlap</h2>
-<p>Üdv az F1 rendszerben!</p>
+<h2>Csapatok és Pilóták</h2>
 
+{% for team in teams %}
+    <h3>{{ team.name }}</h3>
+    <ul>
+        {% for driver in team.driver_set.all %}
+            <li>
+                {{ driver.name }} ({{ driver.age }} éves)
+                <a href="{% url 'driver-delete' driver.pk %}">Törlés</a>
+            </li>
+        {% empty %}
+            <li>Nincsenek pilóták</li>
+        {% endfor %}
+    </ul>
+{% endfor %}
+
+<hr>
+
+<h3>Pilóták csapat nélkül</h3>
 <ul>
-    <li><a href="{% url 'team-list' %}">Csapatok</a></li>
-    <li><a href="{% url 'driver-list' %}">Pilóták</a></li>
+    {% for driver in unassigned_drivers %}
+        <li>
+            {{ driver.name }} ({{ driver.age }} éves)
+            <form method="post" action="{% url 'assign-team' driver.pk %}" style="display:inline;">
+                {% csrf_token %}
+                <select name="team">
+                    {% for team in teams %}
+                        <option value="{{ team.pk }}">{{ team.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Hozzárendelés</button>
+            </form>
+        </li>
+    {% empty %}
+        <li>Nincsenek pilóták csapat nélkül</li>
+    {% endfor %}
 </ul>
+
+<hr>
+
+<h3>Új pilóta hozzáadása</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Hozzáadás</button>
+</form>
 {% endblock %}
