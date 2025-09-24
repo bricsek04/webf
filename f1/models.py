@@ -1,8 +1,15 @@
 from django.db import models
-from teams.models import Team
 from django.db.models import ForeignKey
 
 # Create your models here.
+
+
+class Team(models.Model):
+    name = models.CharField(max_length=100)
+    country = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return self.name
 
 class Driver(models.Model):
     name = models.CharField(max_length=100)

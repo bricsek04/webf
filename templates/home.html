@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Kezdőlap</h2>
+<p>Üdv az F1 rendszerben!</p>
+
+<ul>
+    <li><a href="{% url 'team-list' %}">Csapatok</a></li>
+    <li><a href="{% url 'driver-list' %}">Pilóták</a></li>
+</ul>
+{% endblock %}
