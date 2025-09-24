@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Bejelentkezés</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Belépés</button>
-</form>
+<div class="container mt-4">
+    <h2 class="mb-3">Bejelentkezés</h2>
+    <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Belépés</button>
+    </form>
+</div>
 {% endblock %}

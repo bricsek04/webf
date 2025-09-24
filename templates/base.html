@@ -3,22 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>F1 Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-    <header>
-        <h1>F1 Management</h1>
-        {% if user.is_authenticated %}
-            <p>Szia, {{ user.username }}! 
-                <form action="{% url 'logout' %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit">Kijelentkezés</button>
-                </form>
-            </p>
-        {% else %}
-        {% endif %}
-        <hr>
-    </header>
-    <main>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">F1 Management</a>
+            <div class="d-flex ms-auto">
+                {% if user.is_authenticated %}
+                    <span class="me-2 align-self-center">Szia, {{ user.username }}!</span>
+                    <form action="{% url 'logout' %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-danger btn-sm" type="submit">Kijelentkezés</button>
+                    </form>
+                {% else %}
+                    <p>Kérjük jelentkezz be!</p>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <main class="container">
         {% block content %}{% endblock %}
     </main>
 </body>
