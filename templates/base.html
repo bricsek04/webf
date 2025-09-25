@@ -12,10 +12,11 @@
             <div class="d-flex ms-auto">
                 {% if user.is_authenticated %}
                     <span class="me-2 align-self-center">Szia, {{ user.username }}!</span>
-                    <form action="{% url 'logout' %}" method="post" class="d-inline">
+                    <form action="{% url 'logout' %}" method="post" class="d-inline me-2">
                         {% csrf_token %}
                         <button class="btn btn-outline-danger btn-sm" type="submit">Kijelentkezés</button>
                     </form>
+                    <button type="button" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#addDriverModal">Új pilóta</button>
                 {% else %}
                     <p>Kérjük jelentkezz be!</p>
                 {% endif %}
@@ -25,5 +26,7 @@
     <main class="container">
         {% block content %}{% endblock %}
     </main>
+    {% include "modals/modal_add_driver.html" %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
