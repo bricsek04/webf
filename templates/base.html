@@ -9,17 +9,26 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'home' %}">F1 Management</a>
-            <div class="d-flex ms-auto">
-                {% if user.is_authenticated %}
-                    <span class="me-2 align-self-center">Szia, {{ user.username }}!</span>
-                    <form action="{% url 'logout' %}" method="post" class="d-inline me-2">
-                        {% csrf_token %}
-                        <button class="btn btn-outline-danger btn-sm" type="submit">Kijelentkezés</button>
-                    </form>
-                    <button type="button" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#addDriverModal">Új pilóta</button>
-                {% else %}
-                    <p>Kérjük jelentkezz be!</p>
+            <div class="collapse navbar-collapse">
+                {% if user.is_superuser %}
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'team-list' %}">Csapatok</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'driver-list' %}">Sofőrök</a>
+                    </li>
+                </ul>
                 {% endif %}
+                <div class="d-flex">
+                    {% if user.is_authenticated %}
+                        <span class="me-2 align-self-center">Szia, {{ user.username }}!</span>
+                        <form action="{% url 'logout' %}" method="post" class="d-inline me-2">
+                            {% csrf_token %}
+                            <button class="btn btn-outline-danger btn-sm" type="submit">Kijelentkezés</button>
+                        </form>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </nav>

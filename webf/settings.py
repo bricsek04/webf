@@ -53,7 +53,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'webf.urls'
 
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
 
 TEMPLATES = [
     {

@@ -21,10 +21,7 @@ from f1 import views as f1_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', include('f1.urls')),
-
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
-
-    path('', f1_views.home, name='home'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('', include('f1.urls')),
 ]

@@ -11,9 +11,8 @@
             </div>
             <ul class="list-group list-group-flush">
                 {% for driver in team.driver_set.all %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <li class="list-group-item">
                         {{ driver.name }} ({{ driver.age }} éves)
-                        <a href="{% url 'driver-delete' driver.pk %}" class="btn btn-sm btn-danger">Törlés</a>
                     </li>
                 {% empty %}
                     <li class="list-group-item">Nincsenek pilóták</li>
@@ -25,17 +24,8 @@
     <h3>Pilóták csapat nélkül</h3>
     <ul class="list-group mb-4">
         {% for driver in unassigned_drivers %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
+            <li class="list-group-item">
                 {{ driver.name }} ({{ driver.age }} éves)
-                <form method="post" action="{% url 'assign-team' driver.pk %}" class="d-flex gap-2">
-                    {% csrf_token %}
-                    <select name="team" class="form-select form-select-sm">
-                        {% for team in teams %}
-                            <option value="{{ team.pk }}">{{ team.name }}</option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit" class="btn btn-sm btn-success">Hozzárendelés</button>
-                </form>
             </li>
         {% empty %}
             <li class="list-group-item">Nincsenek pilóták csapat nélkül</li>

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Csapatok</h2>
+    <a href="{% url 'team-add' %}" class="btn btn-primary mb-3">Új csapat</a>
+    <ul class="list-group">
+        {% for team in teams %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ team.name }}, ({{team.country}})
+                <div>
+                    <a href="{% url 'team-edit' team.pk %}" class="btn btn-sm btn-warning">Szerkesztés</a>
+                    <a href="{% url 'team-delete' team.pk %}" class="btn btn-sm btn-danger">Törlés</a>
+                </div>
+            </li>
+        {% empty %}
+            <li class="list-group-item">Nincsenek csapatok</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
