@@ -20,7 +20,9 @@ def driver_list(request):
     if not request.user.is_superuser:
         raise PermissionDenied
     drivers = Driver.objects.select_related('team').all()
-    return render(request, 'driver_list.html', {'drivers': drivers})
+    return render(request, 'driver_list.html', {
+        'drivers': drivers
+    })
 
 @login_required
 def driver_add(request):
@@ -33,7 +35,10 @@ def driver_add(request):
             return redirect('driver-list')
     else:
         form = DriverForm()
-    return render(request, 'driver_form.html', {'form': form, 'title': 'Új sofőr hozzáadása'})
+    return render(request, 'driver_form.html', {
+        'form': form, 
+        'title': 'Új sofőr hozzáadása'
+        })
 
 @login_required
 def driver_edit(request, pk):
@@ -47,7 +52,10 @@ def driver_edit(request, pk):
             return redirect('driver-list')
     else:
         form = DriverForm(instance=driver)
-    return render(request, 'driver_form.html', {'form': form, 'title': 'Sofőr szerkesztése'})
+    return render(request, 'driver_form.html', {
+        'form': form, 
+        'title': 'Sofőr szerkesztése'
+        })
 
 @login_required
 def driver_delete(request, pk):
@@ -62,7 +70,9 @@ def team_list(request):
     if not request.user.is_superuser:
         raise PermissionDenied
     teams = Team.objects.all()
-    return render(request, 'team_list.html', {'teams': teams})
+    return render(request, 'team_list.html', {
+        'teams': teams
+        })
 
 @login_required
 def team_add(request):
@@ -75,7 +85,10 @@ def team_add(request):
             return redirect('team-list')
     else:
         form = TeamForm()
-    return render(request, 'team_form.html', {'form': form, 'title': 'Új csapat hozzáadása'})
+    return render(request, 'team_form.html', {
+        'form': form, 
+        'title': 'Új csapat hozzáadása'
+        })
 
 @login_required
 def team_edit(request, pk):
@@ -89,7 +102,10 @@ def team_edit(request, pk):
             return redirect('team-list')
     else:
         form = TeamForm(instance=team)
-    return render(request, 'team_form.html', {'form': form, 'title': 'Csapat szerkesztése'})
+    return render(request, 'team_form.html', {
+        'form': form, 
+        'title': 'Csapat szerkesztése'
+        })
 
 @login_required
 def team_delete(request, pk):
