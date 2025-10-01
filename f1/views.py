@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from .models import Team, Driver
 from .forms import DriverForm, TeamForm
 
@@ -16,11 +17,15 @@ def home(request):
 
 @login_required
 def driver_list(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     drivers = Driver.objects.select_related('team').all()
     return render(request, 'driver_list.html', {'drivers': drivers})
 
 @login_required
 def driver_add(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     if request.method == 'POST':
         form = DriverForm(request.POST)
         if form.is_valid():
@@ -32,6 +37,8 @@ def driver_add(request):
 
 @login_required
 def driver_edit(request, pk):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     driver = get_object_or_404(Driver, pk=pk)
     if request.method == 'POST':
         form = DriverForm(request.POST, instance=driver)
@@ -44,17 +51,23 @@ def driver_edit(request, pk):
 
 @login_required
 def driver_delete(request, pk):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     driver = get_object_or_404(Driver, pk=pk)
     driver.delete()
     return redirect('driver-list')
 
 @login_required
 def team_list(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     teams = Team.objects.all()
     return render(request, 'team_list.html', {'teams': teams})
 
 @login_required
 def team_add(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     if request.method == 'POST':
         form = TeamForm(request.POST)
         if form.is_valid():
@@ -66,6 +79,8 @@ def team_add(request):
 
 @login_required
 def team_edit(request, pk):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     team = get_object_or_404(Team, pk=pk)
     if request.method == 'POST':
         form = TeamForm(request.POST, instance=team)
@@ -78,6 +93,8 @@ def team_edit(request, pk):
 
 @login_required
 def team_delete(request, pk):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     team = get_object_or_404(Team, pk=pk)
     team.delete()
     return redirect('team-list')
